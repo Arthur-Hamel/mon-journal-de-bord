@@ -1,0 +1,189 @@
+/* Style global */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fefefe;
+    color: #2c3e50;
+    align-items: center;
+}
+
+header {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 30px 15px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 2.8em;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Conteneur principal */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Titres de section */
+#journal h2 {
+    font-size: 1.8em;
+    color: #34495e;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 5px solid #2c3e50;
+    padding-left: 15px;
+}
+
+/* Formulaire */
+form {
+    background: #ecf0f1;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #bdc3c7;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+input, select, textarea, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px 12px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    font-size: 1em;
+    color: #34495e;
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #2c3e50;
+    box-shadow: 0px 0px 5px rgba(44, 62, 80, 0.5);
+    outline: none;
+}
+
+button {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #34495e;
+    transform: scale(1.02);
+}
+
+/* Table Historique */
+#session-history {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+#session-history th, #session-history td {
+    padding: 12px 15px;
+    border: 1px solid #bdc3c7;
+    text-align: left;
+    font-size: 0.95em;
+}
+
+#session-history th {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+#session-history tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#session-history tr:hover {
+    background-color: #dcdde1;
+}
+
+/* Petits détails */
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+form label {
+    display: block;
+    width: 100%;
+}
+
+form input,
+form select,
+form textarea {
+    width: calc(100% - 24px); /* Ajuste en fonction du padding */
+}
+
+/* Appliquer un style au tableau pour occuper toute la largeur */
+#session-history {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Assurer que chaque colonne occupe une place équitable */
+#session-history th, #session-history td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Agrandir la section contenant l'historique */
+#journal {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Centrer le contenu globalement */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    body, table, input, select, textarea, button {
+        font-size: 14px;
+    }
+
+    #session-history th, #session-history td {
+        display: block;
+        width: 100%;
+    }
+
+    #session-history tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    input, select, textarea, button {
+        width: calc(100% - 20px);
+    }
+}
