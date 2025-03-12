@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal de Navigation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Mon Journal de Navigation</h1>
+    </header>
+    <main>
+        <section id="journal">
+            <h2>Entrer une nouvelle session</h2>
+            <form id="new-session">
+                <label for="date">Date :</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="location">Lieu de navigation :</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="support">Support :</label>
+                <input type="text" id="support" name="support" required>
+
+                <label for="regatta">Régate :</label>
+                <input type="checkbox" id="regatta" name="regatta">
+
+                <label for="regatta-name">Nom de la régate (le cas échéant) :</label>
+                <input type="text" id="regatta-name" name="regatta-name">
+
+                <label for="wind">Vent (en nœuds) :</label>
+                <select id="wind" name="wind" required></select>
+
+                <label for="wave-height">Hauteur des vagues (en mètres) :</label>
+                <select id="wave-height" name="wave-height" required>
+                    <option value="0">0 m</option>
+                    <option value="0.1">0.1 m</option>
+                    <option value="0.2">0.2 m</option>
+                    <option value="0.3">0.3 m</option>
+                    <option value="0.4">0.4 m</option>
+                    <option value="0.5">0.5 m</option>
+                    <option value="1">1 m</option>
+                    <option value="2">2 m</option>
+                </select>
+
+                <label for="observations">Observations :</label>
+                <textarea id="observations" name="observations"></textarea>
+
+                <button type="submit">Enregistrer</button>
+            </form>
+
+            <h2>Historique des sessions</h2>
+            <table id="session-history">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Lieu</th>
+                        <th>Support</th>
+                        <th>Régate</th>
+                        <th>Vent (kt)</th>
+                        <th>Hauteur des vagues (m)</th>
+                        <th>Observations</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Les sessions enregistrées apparaîtront ici -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
