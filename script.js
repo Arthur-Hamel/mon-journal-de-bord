@@ -1,75 +1,76 @@
-document.getElementById('new-session').addEventListener('submit', function (e) {
+// Importer Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// Configuration Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDu5frrsg2pVdpKW7loG_DfYicEw3Qw9AM",
+    authDomain: "ilca-performance.firebaseapp.com",
+    projectId: "ilca-performance",
+    storageBucket: "ilca-performance.firebasestorage.app",
+    messagingSenderId: "972275072584",
+    appId: "1:972275072584:web:e0f20293eca3ef301ee27d",
+    measurementId: "G-0QR12D7FMR"
+};
+
+// Initialiser Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Ajouter une nouvelle session
+document.getElementById('new-session').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const date = document.getElementById('date').value;
-    const location = document.getElementById('location').value;
-    const support = document.getElementById('support').value;
-    const regatta = document.getElementById('regatta').checked;
-    const regattaName = regatta ? document.getElementById('regatta-name').value : 'Non';
-    const wind = document.getElementById('wind').value;
-    const waveHeight = document.getElementById('wave-height').value;
-    const observations = document.getElementById('observations').value;
+    const session = {
+        date: document.getElementById('date').value,
+        location: document.getElementById('location').value,
+        support: document.getElementById('support').value,
+        regatta: document.getElementById('regatta').checked,
+        regattaName: document.getElementById('regatta').checked ? document.getElementById('regatta-name').value : 'Non',
+        wind: document.getElementById('wind').value,
+        waveHeight: document.getElementById('wave-height').value,
+        observations: document.getElementById('observations').value
+    };
 
-    const session = { date, location, support, regatta, regattaName, wind, waveHeight, observations };
-
-    let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
-    sessions.push(session);
-    localStorage.setItem('sessions', JSON.stringify(sessions));
+    try {
+        await addDoc(collection(db, "sessions"), session);
+        alert('Session enregistrée dans Firestore!');
+        loadSessions();
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de la session : ", error);
+    }
 
     document.getElementById('new-session').reset();
-    loadSessions();
 });
 
-function addSessionToTable(session, index) {
+// Charger les sessions
+async function loadSessions() {
     const table = document.getElementById('session-history').getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-    newRow.innerHTML = `
-        <td>${session.date}</td>
-        <td>${session.location}</td>
-        <td>${session.support}</td>
-        <td>${session.regatta ? session.regattaName : 'Non'}</td>
-        <td>${session.wind}</td>
-        <td>${session.waveHeight}</td>
-        <td>${session.observations}</td>
-        <td>
-            <button onclick="editSession(${index})">Modifier</button>
-            <button onclick="deleteSession(${index})">Supprimer</button>
-        </td>
-    `;
+    table.innerHTML = ''; // Vider la table avant de charger
+
+    try {
+        const querySnapshot = await getDocs(collection(db, "sessions"));
+        querySnapshot.forEach((doc) => {
+            const session = doc.data();
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td>${session.date}</td>
+                <td>${session.location}</td>
+                <td>${session.support}</td>
+                <td>${session.regatta ? session.regattaName : 'Non'}</td>
+                <td>${session.wind}</td>
+                <td>${session.waveHeight}</td>
+                <td>${session.observations}</td>
+            `;
+        });
+    } catch (error) {
+        console.error("Erreur lors du chargement des sessions : ", error);
+    }
 }
 
-function loadSessions() {
-    const table = document.getElementById('session-history').getElementsByTagName('tbody')[0];
-    table.innerHTML = ''; // Vider avant de charger
-    const sessions = JSON.parse(localStorage.getItem('sessions')) || [];
-    sessions.forEach((session, index) => {
-        addSessionToTable(session, index);
-    });
-}
-
-function deleteSession(index) {
-    let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
-    sessions.splice(index, 1);
-    localStorage.setItem('sessions', JSON.stringify(sessions));
-    loadSessions();
-}
-
-function editSession(index) {
-    let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
-    const session = sessions[index];
-    document.getElementById('date').value = session.date;
-    document.getElementById('location').value = session.location;
-    document.getElementById('support').value = session.support;
-    document.getElementById('regatta').checked = session.regatta;
-    document.getElementById('regatta-name').value = session.regattaName;
-    document.getElementById('wind').value = session.wind;
-    document.getElementById('wave-height').value = session.waveHeight;
-    document.getElementById('observations').value = session.observations;
-}
-
+// Générer les options de vent
 function generateWindOptions() {
     const windSelect = document.getElementById('wind');
-    windSelect.innerHTML = ''; // Vider avant de générer
     for (let i = 1; i <= 50; i++) {
         const option = document.createElement('option');
         option.value = i;
@@ -78,7 +79,7 @@ function generateWindOptions() {
     }
 }
 
-// Charger au démarrage
+// Initialisation
 document.addEventListener('DOMContentLoaded', () => {
     generateWindOptions();
     loadSessions();
